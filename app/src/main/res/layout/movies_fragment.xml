@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screenBackground"
+    tools:context=".view.fragments.MoviesFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/component_margin"
+        android:id="@+id/list"/>
+
+    <include layout="@layout/movie_grid_shimmering"
+        android:id="@+id/shimmering"/>
+
+    <include layout="@layout/message_view"
+        android:visibility="gone"
+        android:id="@+id/messageView"/>
+
+</FrameLayout>
