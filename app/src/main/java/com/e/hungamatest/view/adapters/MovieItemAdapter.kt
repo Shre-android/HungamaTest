@@ -12,7 +12,7 @@ import com.e.hungamatest.R
 import com.e.hungamatest.databinding.MovieItemBinding
 import com.e.hungamatest.model.db.pojo.Movie
 import com.e.hungamatest.utility.buildImageURL
-
+import com.e.hungamatest.utility.getYear
 
 
 class MovieItemAdapter(private val clickHandler: AdapterClickHandler) : PagedListAdapter<Movie, MovieItemAdapter.ViewHolder>(
@@ -33,8 +33,8 @@ class MovieItemAdapter(private val clickHandler: AdapterClickHandler) : PagedLis
             holder.binder.name.text = it.title
             holder.binder.banner.setImageURI(buildImageURL(it.posterPath))
             holder.binder.rating.text = context.getString(R.string.rating,it.voteAverage.toString())
-//            holder.binder.launchYear.text = getYear(it.releaseDate)
-            holder.binder.launchYear.text = it.releaseDate
+            holder.binder.launchYear.text = getYear(it.releaseDate)
+           // holder.binder.launchYear.text = it.releaseDate
 
             //Logic to change the fav icon according to the user action
             if(it.isFavourite){
