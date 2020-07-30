@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
 data class Cast(
     @SerializedName("cast_id")
     @Expose
-    val castId: Int?=null,
+    var castId: Int?=null,
     @SerializedName("credit_id")
     @Expose
     val creditId: String? = "",
@@ -32,7 +32,7 @@ data class Cast(
 
     @SerializedName("profile_path")
     @Expose
-    val profilePath: String? = "")
+    var profilePath: String? = "")
 
 
 

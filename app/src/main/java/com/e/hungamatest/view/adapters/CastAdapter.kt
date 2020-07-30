@@ -9,7 +9,7 @@ import com.e.hungamatest.utility.buildImageURL
 
 
 
-class CastAdapter(private val cast: List<Cast>?) : RecyclerView.Adapter<CastAdapter.ViewHolder>() {
+class CastAdapter(private val cast: ArrayList<Cast>?) : RecyclerView.Adapter<CastAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,13 +19,16 @@ class CastAdapter(private val cast: List<Cast>?) : RecyclerView.Adapter<CastAdap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         cast.let {
+                    if (position>0) {
+                        holder.binder.castImage.setImageURI(cast?.get(position)?.profilePath?.let { it1 ->
+                            getImagePath(
+                                it1
+                            )
+                        })
+                        holder.binder.castName.setText(cast?.get(position)?.name)
+                    }
 
-            holder.binder.castImage.setImageURI(cast?.get(position)?.profilePath?.let { it1 ->
-                getImagePath(
-                    it1
-                )
-            })
-            holder.binder.castName.setText(cast?.get(position)?.name)
+
         }
 
 

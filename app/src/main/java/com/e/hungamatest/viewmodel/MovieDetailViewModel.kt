@@ -1,5 +1,6 @@
 package com.e.hungamatest.viewmodel
 
+import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +17,12 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
 import java.lang.StringBuilder
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MovieDetailViewModel : ViewModel() {
 
@@ -102,6 +108,11 @@ class MovieDetailViewModel : ViewModel() {
             }
         }
     }
+
+
+
+
+
     /*
     Function to load the similar movies from API call
      */
