@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.e.hungamatest.AdapterClickHandler
 import com.e.hungamatest.R
 import com.e.hungamatest.databinding.MovieDetailFragmentBinding
@@ -24,6 +25,7 @@ import com.e.hungamatest.view.adapters.CastAdapter
 import com.e.hungamatest.view.adapters.CrewAdapter
 import com.e.hungamatest.view.adapters.SimilarMoviesAdapter
 import com.e.hungamatest.viewmodel.MovieDetailViewModel
+import kotlinx.android.synthetic.main.movie_detail_fragment.view.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -38,8 +40,6 @@ class MovieDetailFragment : BaseFragment(), AdapterClickHandler {
     private lateinit var viewModel: MovieDetailViewModel
     public lateinit var view: MovieDetailFragmentBinding
     var list : ArrayList<Cast> = ArrayList()
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +70,7 @@ class MovieDetailFragment : BaseFragment(), AdapterClickHandler {
 
 
         //call for Async Task
-        val task = HTTPReqTask(requireContext(),list)
+        val task = HTTPReqTask(requireContext(),list,view.recycleViewCast)
         task.execute(arguments?.getInt("ID").toString())
         renderUI()
     }
@@ -97,9 +97,6 @@ class MovieDetailFragment : BaseFragment(), AdapterClickHandler {
         })
 
 
-        view.recycleViewCast.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        val adapterCast = CastAdapter(list)
-        view.recycleViewCast.adapter = adapterCast
 
 
 
@@ -141,13 +138,17 @@ class MovieDetailFragment : BaseFragment(), AdapterClickHandler {
 Async task for HTTP url connection
  */
     private  class HTTPReqTask(
-        context: Context,
-        list: ArrayList<Cast>
+    context: Context,
+    list: ArrayList<Cast>,
+    recycleViewCast: RecyclerView
 
-    ) :
+) :
         AsyncTask<String?, String?, String?>() {
         val progressDialog = ProgressDialog(context)
         val listCastDetails : ArrayList<Cast> = list
+        val recVw : RecyclerView = recycleViewCast
+    val cntxt : Context = context
+
 
         override fun onPreExecute() {
             super.onPreExecute()
@@ -192,6 +193,8 @@ Async task for HTTP url connection
                         model.name==json_objectdetail.getString("name")
                         model.profilePath=json_objectdetail.getString("profile_path")
                         listCastDetails.add(model)
+
+
                     }
                 }
 
@@ -207,6 +210,11 @@ Async task for HTTP url connection
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             progressDialog.dismiss()
+
+            recVw.layoutManager = LinearLayoutManager(cntxt,LinearLayoutManager.HORIZONTAL,false)
+            val adapterCast = CastAdapter(listCastDetails)
+            recVw.adapter = adapterCast
+
         }
     }
 
